@@ -1,0 +1,82 @@
+---
+import type { Project } from '../data/projects';
+
+interface Props {
+  project: Project;
+}
+const { project } = Astro.props;
+const href = project.url ?? (project.github ? `https://github.com/${project.github}` : '/work');
+---
+<a class="card project-card" href={href} target={project.url || project.github ? '_blank' : undefined} rel={project.url || project.github ? 'noopener' : undefined}>
+  <div class="project-top">
+    <span class={`pill ${project.status}`}>{project.statusLabel}</span>
+    <span class="project-cat">{project.category}</span>
+  </div>
+  <h3 class="project-name">{project.name}</h3>
+  <p class="project-tagline">{project.tagline}</p>
+  <p class="project-desc">{project.description}</p>
+  <div class="project-bottom">
+    <div class="project-stack">
+      {project.stack.map((s) => <span class="chip">{s}</span>)}
+    </div>
+    {project.metric && <span class="project-metric">{project.metric}</span>}
+  </div>
+</a>
+
+<style>
+  .project-card { gap: 8px; }
+  .project-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .project-cat {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .project-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .project-tagline { color: var(--text-secondary); font-size: 0.95rem; font-weight: 500; }
+  .project-desc {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .project-bottom {
+    margin-top: auto;
+    padding-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .project-stack { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 5px;
+  }
+  .project-metric {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+</style>

@@ -1,0 +1,131 @@
+---
+import Base from '../layouts/Base.astro';
+
+const timeline = [
+  { period: '2020 —', title: 'Founder & Principal AI Engineer', org: 'Magneton Labs · Chicago', detail: 'Solo AI engineering contractor building autonomous, production-grade agent systems. Multi-agent workflow adopted across 60+ repositories.' },
+  { period: '2023 —', title: 'Principal AI Engineer', org: 'YonedaAI Research Collective', detail: 'GrokRxiv agentic peer review, Lean 4 / HoTT program toward the Riemann Hypothesis, JAPL language design, ferrous-bridge C-to-Rust translation.' },
+  { period: '2026', title: 'Lead Software Engineer & DevOps Architect', org: 'Belden', detail: 'SQLite→PostgreSQL migration and enterprise Azure architecture for a collaborative network-design platform.' },
+  { period: '2020–26', title: 'Lead Software Engineer & DevOps Architect', org: 'TSI (Techno-Sciences / Orolia)', detail: 'Rescue Coordination System — 99.95% uptime, +40% performance, −25% infrastructure cost.' },
+  { period: '2024–25', title: 'Lead Software Engineer', org: 'Zoro / Grainger — Data Platforms', detail: 'Palantir Foundry pipelines; 2M+ daily package events; order APIs at 10K req/s.' },
+  { period: '2018–22', title: 'Senior Full-Stack / DevOps Engineer', org: 'Regis Corporation', detail: 'ML document classification at 94% accuracy; franchise analytics for 500+ locations.' },
+  { period: '2020–21', title: 'Lead Full-Stack Engineer', org: 'BetaCom', detail: 'Kafka streaming for 50M+ daily 5G telemetry events; incident detection 95% faster.' },
+  { period: '2016–18', title: 'Senior Software Engineer', org: 'Evident.io (→ Palo Alto Networks)', detail: 'Core engineer; contributed to positioning for $300M acquisition.' },
+];
+---
+<Base title="About" description="Yoneda Labs is the AI research & development lab of Matthew Long — 20+ years of production engineering, DARPA-recognized, patent-holding, based in Chicago (Magneton Labs, LLC).">
+  <section class="page-hero">
+    <div class="container">
+      <p class="mono-label">about the lab</p>
+      <h1 class="section-title">A lab built on one constraint</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container two-col">
+      <div class="prose">
+        <p>
+          <strong>Yoneda Labs</strong> is the AI research and development practice of
+          <strong>Matthew Long</strong>, operating through Magneton Labs, LLC in Chicago. The lab
+          builds agent infrastructure, developer tools, and formally-grounded research — and has
+          delivered production systems for clients for over two decades.
+        </p>
+        <p>
+          The name comes from the <strong>Yoneda lemma</strong>: an object is fully determined by
+          its relationships to every other object. We take that as an engineering principle —
+          <strong>understand the structure and you understand the system</strong>. It's why our
+          data layer refuses unprovable answers, our source control treats commits as transactions,
+          and our research program attacks open problems in physics and mathematics with
+          category theory rather than brute force.
+        </p>
+        <p>
+          The lab has produced <strong>122 research papers across 27 collections</strong>, two
+          patent filings, and thirteen products and platforms — from <a href="/work">CatDB and
+          ContextFS</a> to the <a href="/research">Quantum Perspectivism program</a>.
+        </p>
+      </div>
+
+      <aside class="card cred-card">
+        <h3 class="mono-label">credentials</h3>
+        <ul class="creds">
+          <li><strong>DARPA</strong> Distinguished Technology Innovator &amp; Leadership Alliance Member</li>
+          <li><strong>Patent holder</strong> — Secure Distributed Messaging Architecture</li>
+          <li><strong>AWS</strong> Certified Solutions Architect</li>
+          <li><strong>Microsoft</strong> Certified: Azure Solutions Architect Expert</li>
+          <li><strong>Bug Fix of the Year 2017</strong> — Evident.io</li>
+        </ul>
+        <h3 class="mono-label cred-gap">education</h3>
+        <ul class="creds">
+          <li><strong>University of Colorado</strong> — M.S. &amp; B.S., Computer Science</li>
+          <li><strong>Aion University</strong> — PhD-level research, Foundations of Mathematics &amp; Physics</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="mono-label">trajectory</p>
+          <h2 class="section-title">Twenty years, shipped</h2>
+        </div>
+      </div>
+      <ol class="timeline">
+        {timeline.map((t) => (
+          <li>
+            <span class="t-period">{t.period}</span>
+            <div class="t-body">
+              <h3>{t.title} <span class="t-org">· {t.org}</span></h3>
+              <p>{t.detail}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+  .prose a { color: var(--accent); }
+  .prose a:hover { color: var(--accent-soft); }
+  .cred-card { position: sticky; top: 88px; }
+  .cred-gap { margin-top: 22px; }
+  .creds { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+  .creds li {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    padding-left: 16px;
+    border-left: 2px solid var(--border-strong);
+  }
+  .creds strong { color: var(--text); }
+
+  .timeline { list-style: none; display: flex; flex-direction: column; }
+  .timeline li {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .t-period {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    padding-top: 4px;
+  }
+  .t-body h3 { font-size: 1.02rem; font-weight: 600; }
+  .t-org { color: var(--muted); font-weight: 400; font-size: 0.88rem; }
+  .t-body p { color: var(--text-secondary); font-size: 0.9rem; margin-top: 4px; }
+  @media (max-width: 640px) {
+    .timeline li { grid-template-columns: 1fr; gap: 6px; }
+  }
+</style>

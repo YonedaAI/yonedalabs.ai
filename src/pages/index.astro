@@ -1,0 +1,223 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroBg from '../components/HeroBg.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Counters from '../components/Counters.astro';
+import { projects } from '../data/projects';
+import { clients } from '../data/clients';
+import catalog from '../data/catalog.json';
+
+interface CatalogPaper { title: string; pdf: string }
+interface CatalogCollection {
+  id: string;
+  name: string;
+  field: string;
+  site: string | null;
+  github: string | null;
+  papers: CatalogPaper[];
+}
+
+const collections = catalog as CatalogCollection[];
+const totalPapers = collections.reduce((n, c) => n + c.papers.length, 0);
+const featured = projects.filter((p) => p.featured);
+const clientNames = clients.map((c) => c.name);
+const topCollections = [...collections].sort((a, b) => b.papers.length - a.papers.length).slice(0, 6);
+---
+<Base title="Home" description="Yoneda Labs is an AI research and development lab building agent infrastructure, developer tools, and formally-grounded research — 122 papers across 27 collections, 13 products, 20+ years of production engineering.">
+  <!-- Hero -->
+  <section class="hero">
+    <HeroBg />
+    <div class="container hero-inner">
+      <p class="mono-label">ai research &amp; development lab</p>
+      <h1>Structure before<span class="accent"> statistics.</span></h1>
+      <p class="hero-sub">
+        Yoneda Labs builds production AI systems — agent infrastructure, developer tools, and
+        formally-grounded research. We apply category-theoretic structure to machines that act,
+        not just models that guess.
+      </p>
+      <div class="hero-cta">
+        <a href="/work" class="btn btn-primary">Explore the work <span class="arrow">→</span></a>
+        <a href="/contact" class="btn btn-ghost">Work with us</a>
+      </div>
+
+      <div class="metrics">
+        <div class="metric">
+          <div class="metric-value" data-count="122">0</div>
+          <div class="metric-label">Research papers</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value" data-count="27">0</div>
+          <div class="metric-label">Paper collections</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value" data-count="13">0</div>
+          <div class="metric-label">Products &amp; platforms</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value" data-count="20">0<span class="suffix">+</span></div>
+          <div class="metric-label">Years shipping</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <Counters />
+
+  <!-- Featured work -->
+  <section class="section" id="work">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="mono-label">featured work</p>
+          <h2 class="section-title">Systems in production</h2>
+        </div>
+        <a href="/work" class="btn btn-ghost">All {projects.length} projects <span class="arrow">→</span></a>
+      </div>
+      <div class="grid-3">
+        {featured.map((p) => <ProjectCard project={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Research -->
+  <section class="section" id="research">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="mono-label">research</p>
+          <h2 class="section-title">{totalPapers} papers, one constraint</h2>
+          <p class="section-sub">
+            Everything traces back to the Yoneda Constraint — an object is fully determined by its
+            relationships. Our research program applies it to physics, mathematics, and AI.
+          </p>
+        </div>
+        <a href="/research" class="btn btn-ghost">Browse research <span class="arrow">→</span></a>
+      </div>
+      <div class="grid-3">
+        {topCollections.map((c) => (
+          <a class="card coll-card" href={`/research/${c.id}`}>
+            <span class="coll-count">{c.papers.length} papers</span>
+            <h3>{c.name}</h3>
+            <span class="coll-field">{c.field}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Clients -->
+  <section class="section" id="clients">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="mono-label">clients &amp; track record</p>
+          <h2 class="section-title">Trusted in production</h2>
+        </div>
+        <a href="/clients" class="btn btn-ghost">Case studies <span class="arrow">→</span></a>
+      </div>
+      <ul class="client-strip">
+        {clientNames.map((name) => <li>{name}</li>)}
+      </ul>
+      <div class="grid-3 highlights">
+        <div class="card highlight">
+          <div class="metric-value">$300M</div>
+          <p>acquisition our engineering contributed to — Evident.io → Palo Alto Networks</p>
+        </div>
+        <div class="card highlight">
+          <div class="metric-value">99.95%</div>
+          <p>uptime on a coast-guard-scale rescue coordination platform</p>
+        </div>
+        <div class="card highlight">
+          <div class="metric-value">2M+</div>
+          <p>package events processed daily with sub-second response</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission CTA -->
+  <section class="section cta">
+    <div class="container cta-inner">
+      <p class="mono-label">mission</p>
+      <h2>Build machines that can prove<br />what they claim.</h2>
+      <p class="section-sub">
+        Refusing unprovable answers is a feature, not a limitation. We bring that standard to
+        every product, paper, and engagement.
+      </p>
+      <div class="hero-cta">
+        <a href="/about" class="btn btn-primary">About the lab <span class="arrow">→</span></a>
+        <a href="/contact" class="btn btn-ghost">Start a conversation</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    padding: 110px 0 88px;
+    overflow: hidden;
+    border-top: none;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero h1 {
+    font-size: clamp(2.6rem, 6.5vw, 4.4rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+    margin: 18px 0 20px;
+    max-width: 700px;
+  }
+  .accent { color: var(--accent); }
+  .hero-sub {
+    color: var(--text-secondary);
+    max-width: 560px;
+    font-size: 1.08rem;
+    margin-bottom: 32px;
+  }
+  .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 56px; }
+
+  .coll-card h3 { font-size: 1.02rem; font-weight: 600; line-height: 1.35; }
+  .coll-count {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--accent);
+    width: fit-content;
+  }
+  .coll-field {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: auto;
+    padding-top: 8px;
+  }
+
+  .client-strip {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .client-strip li {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    background: var(--bg-panel);
+    padding: 8px 16px;
+    border-radius: 999px;
+  }
+  .highlights .metric-value { font-size: 1.9rem; text-align: left; color: var(--accent-soft); }
+  .highlight p { color: var(--muted); font-size: 0.88rem; }
+
+  .cta { text-align: center; }
+  .cta-inner { display: flex; flex-direction: column; align-items: center; }
+  .cta h2 {
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    margin: 14px 0 16px;
+  }
+  .cta .section-sub { margin: 0 auto 30px; }
+  .cta .hero-cta { justify-content: center; margin-bottom: 0; }
+</style>

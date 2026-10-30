@@ -1,0 +1,31 @@
+---
+// Animates .metric-value[data-count] elements with a count-up when scrolled into view.
+---
+<script>
+  function animate(el: HTMLElement) {
+    const target = parseInt(el.dataset.count || '0', 10);
+    const duration = 1400;
+    const start = performance.now();
+    function tick(now: number) {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased).toString();
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          animate(e.target as HTMLElement);
+          observer.unobserve(e.target);
+        }
+      }
+    },
+    { threshold: 0.4 }
+  );
+
+  document.querySelectorAll<HTMLElement>('.metric-value[data-count]').forEach((el) => observer.observe(el));
+</script>

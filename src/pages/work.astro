@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projects } from '../data/projects';
+
+const categories = [...new Set(projects.map((p) => p.category))];
+const byCategory = categories.map((c) => ({ category: c, items: projects.filter((p) => p.category === c) }));
+---
+<Base title="Work" description="Products and platforms from Yoneda Labs: agent infrastructure (CatDB, YonedaRepo, AgentHero), developer tools (ContextFS, JAPL, MDReader), research systems (GrokRxiv, QuantumFlow), and consumer apps.">
+  <section class="page-hero">
+    <div class="container">
+      <p class="mono-label">work</p>
+      <h1 class="section-title">{projects.length} products, one standard</h1>
+      <p class="section-sub">
+        Every project ships with the same bar: production-grade, formally honest, and built to be
+        operated — not demoed.
+      </p>
+    </div>
+  </section>
+
+  {byCategory.map(({ category, items }) => (
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="mono-label">{category.toLowerCase()}</p>
+            <h2 class="section-title">{category}</h2>
+          </div>
+        </div>
+        <div class="grid-3">
+          {items.map((p) => <ProjectCard project={p} />)}
+        </div>
+      </div>
+    </section>
+  ))}
+</Base>

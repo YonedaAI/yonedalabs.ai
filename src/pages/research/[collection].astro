@@ -1,0 +1,77 @@
+---
+import Base from '../../layouts/Base.astro';
+import catalog from '../../data/catalog.json';
+
+interface CatalogPaper { title: string; pdf: string }
+interface CatalogCollection {
+  id: string;
+  name: string;
+  field: string;
+  site: string | null;
+  github: string | null;
+  papers: CatalogPaper[];
+}
+
+export function getStaticPaths() {
+  const collections = catalog as CatalogCollection[];
+  return collections.map((c) => ({ params: { collection: c.id }, props: { collection: c } }));
+}
+
+const { collection } = Astro.props;
+const desc = `${collection.name}: ${collection.papers.length} papers in ${collection.field}. Full PDF library from Yoneda Labs.`;
+---
+<Base title={collection.name} description={desc}>
+  <section class="page-hero">
+    <div class="container">
+      <a href="/research" class="back">← All collections</a>
+      <p class="mono-label">{collection.field.toLowerCase()}</p>
+      <h1 class="section-title">{collection.name}</h1>
+      <p class="section-sub">{collection.papers.length} papers · full PDFs hosted on-site.</p>
+      <div class="links">
+        {collection.site && (
+          <a class="btn btn-ghost" href={collection.site} target="_blank" rel="noopener">Collection site ↗</a>
+        )}
+        {collection.github && (
+          <a class="btn btn-ghost" href={`https://github.com/${collection.github}`} target="_blank" rel="noopener">{collection.github} ↗</a>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>#</th><th>Paper</th><th></th></tr>
+          </thead>
+          <tbody>
+            {collection.papers.map((p, i) => (
+              <tr>
+                <td class="num">{String(i + 1).padStart(2, '0')}</td>
+                <td class="title">{p.title}</td>
+                <td class="dl"><a href={p.pdf} target="_blank" rel="noopener">PDF ↗</a></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .back {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  .back:hover { color: var(--accent); }
+  .links { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+  .num { font-family: var(--font-mono); color: var(--accent); width: 48px; }
+  .dl { text-align: right; white-space: nowrap; }
+  .dl a { color: var(--accent); font-family: var(--font-mono); font-size: 0.8rem; }
+  .dl a:hover { color: var(--accent-soft); }
+</style>

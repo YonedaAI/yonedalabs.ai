@@ -1,0 +1,86 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Contact" description="Work with Yoneda Labs — AI agent systems, data platforms, and research engineering. Email mlong@magneton.io. Based in Chicago.">
+  <section class="page-hero">
+    <div class="container">
+      <p class="mono-label">contact</p>
+      <h1 class="section-title">Let's build something provable</h1>
+      <p class="section-sub">
+        Engagements typically start with a well-scoped problem: an agent system that must not
+        hallucinate, a data platform that must not lose rows, a pipeline that must not fail.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container two-col">
+      <div class="contact-cards">
+        <a class="card contact-card" href="mailto:mlong@magneton.io">
+          <span class="mono-label">email</span>
+          <span class="contact-value">mlong@magneton.io</span>
+          <span class="contact-note">Best first contact — include scope and timeline.</span>
+        </a>
+        <a class="card contact-card" href="/resume.pdf" download>
+          <span class="mono-label">resume</span>
+          <span class="contact-value">Resume_Matthew_Long.pdf ⬇</span>
+          <span class="contact-note">Full track record: 20+ years, metrics, certifications.</span>
+        </a>
+        <a class="card contact-card" href="https://github.com/MagnetonIO" target="_blank" rel="noopener">
+          <span class="mono-label">open source</span>
+          <span class="contact-value">github.com/MagnetonIO ↗</span>
+          <span class="contact-note">50+ public repositories across the lab's programs.</span>
+        </a>
+      </div>
+
+      <aside class="card">
+        <h3 class="mono-label">good fits</h3>
+        <ul class="fits">
+          <li>Autonomous agent systems that must run unattended</li>
+          <li>Semantic data layers over messy enterprise sources</li>
+          <li>High-throughput data platforms (events, orders, telemetry)</li>
+          <li>Formal methods — Lean 4, type systems, verification</li>
+          <li>Applied research programs with publishable output</li>
+        </ul>
+        <h3 class="mono-label cred-gap">elsewhere</h3>
+        <ul class="fits">
+          <li><a href="https://yonedaai.com" target="_blank" rel="noopener">yonedaai.com ↗</a> — research collective</li>
+          <li><a href="https://grokrxiv.org" target="_blank" rel="noopener">grokrxiv.org ↗</a> — agentic peer review</li>
+          <li><a href="https://catdb.ai" target="_blank" rel="noopener">catdb.ai ↗</a> · <a href="https://contextfs.ai" target="_blank" rel="noopener">contextfs.ai ↗</a> · <a href="https://yonedarepo.com" target="_blank" rel="noopener">yonedarepo.com ↗</a></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+  .contact-cards { display: flex; flex-direction: column; gap: 16px; }
+  .contact-card { gap: 6px; }
+  .contact-card:hover { border-color: var(--accent); }
+  .contact-value {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .contact-note { color: var(--muted); font-size: 0.85rem; }
+  .cred-gap { margin-top: 22px; }
+  .fits { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+  .fits li {
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    padding-left: 16px;
+    border-left: 2px solid var(--border-strong);
+  }
+  .fits a { color: var(--accent); }
+  .fits a:hover { color: var(--accent-soft); }
+</style>

@@ -1,0 +1,105 @@
+---
+import Base from '../../layouts/Base.astro';
+
+interface CatalogPaper { title: string; pdf: string }
+interface CatalogCollection {
+  id: string;
+  name: string;
+  field: string;
+  site: string | null;
+  github: string | null;
+  papers: CatalogPaper[];
+}
+import catalog from '../../data/catalog.json';
+const collections = catalog as CatalogCollection[];
+const totalPapers = collections.reduce((n, c) => n + c.papers.length, 0);
+const fields = [...new Set(collections.map((c) => c.field))];
+const byField = fields.map((f) => ({ field: f, items: collections.filter((c) => c.field === f) }));
+---
+<Base title="Research" description={`The Yoneda Labs research library: ${totalPapers} papers across ${collections.length} collections applying category theory and the Yoneda Constraint to physics, mathematics, AI, and complex systems. Full PDF library hosted on-site.`}>
+  <section class="page-hero">
+    <div class="container">
+      <p class="mono-label">research library</p>
+      <h1 class="section-title">{totalPapers} papers · {collections.length} collections</h1>
+      <p class="section-sub">
+        Our research program applies category theory — the Yoneda lemma, presheaf semantics, Kan
+        extensions, cohomological obstructions — to open problems in physics, mathematics, and AI.
+        Every paper is hosted here as a free PDF.
+      </p>
+    </div>
+  </section>
+
+  {byField.map(({ field, items }) => (
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="mono-label">{field.toLowerCase()}</p>
+            <h2 class="section-title">{field}</h2>
+          </div>
+          <span class="field-count">{items.reduce((n, c) => n + c.papers.length, 0)} papers</span>
+        </div>
+        <div class="grid-3">
+          {items.map((c) => (
+            <a class="card coll-card" href={`/research/${c.id}`}>
+              <span class="coll-count">{c.papers.length} papers</span>
+              <h3>{c.name}</h3>
+              <div class="coll-meta">
+                {c.site && <span class="coll-site">site ↗</span>}
+                {c.github && <span class="coll-gh">{c.github}</span>}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="mono-label">patents</p>
+          <h2 class="section-title">Patented work</h2>
+        </div>
+      </div>
+      <div class="grid-2">
+        <a class="card coll-card" href="/papers/pdf/library/quantumflow/US_Patent_Inverse_Topological_Decoding_Derived_Hamiltonians.pdf" target="_blank" rel="noopener">
+          <span class="coll-count">US patent</span>
+          <h3>Inverse Topological Decoding, Derived Hamiltonians</h3>
+          <span class="coll-field">QuantumFlow · patent PDF ↗</span>
+        </a>
+        <a class="card coll-card" href="/papers/pdf/library/fibered-sheaf-memory/patent_fibered_sheaf_memory.pdf" target="_blank" rel="noopener">
+          <span class="coll-count">patent application</span>
+          <h3>Ephemeral Memory, Fibered-Sheaf Merge &amp; Research Ingestion Pipelines</h3>
+          <span class="coll-field">Agent systems · library PDF ↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .field-count {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .coll-card h3 { font-size: 1.02rem; font-weight: 600; line-height: 1.35; }
+  .coll-count {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--accent);
+    width: fit-content;
+  }
+  .coll-meta {
+    margin-top: auto;
+    padding-top: 10px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .coll-site { font-family: var(--font-mono); font-size: 0.74rem; color: var(--green); }
+  .coll-gh { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+  .coll-field { font-size: 0.8rem; color: var(--muted); margin-top: auto; padding-top: 8px; }
+</style>

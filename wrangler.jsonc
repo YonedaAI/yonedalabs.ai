@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "yonedalabs",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "yonedalabs.ai", "custom_domain": true },
+    { "pattern": "www.yonedalabs.ai", "custom_domain": true }
+  ]
+}

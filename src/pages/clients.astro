@@ -1,0 +1,106 @@
+---
+import Base from '../layouts/Base.astro';
+import { clients } from '../data/clients';
+---
+<Base title="Clients" description="Yoneda Labs client work and track record: Belden, Zoro/Grainger, TSI (Orolia), Regis Corporation, BetaCom, Evident.io (acquired by Palo Alto Networks for $300M), Pop Secret, and Cogability.">
+  <section class="page-hero">
+    <div class="container">
+      <p class="mono-label">clients &amp; track record</p>
+      <h1 class="section-title">Two decades of production</h1>
+      <p class="section-sub">
+        Enterprise platforms, data pipelines, and AI systems delivered for clients from
+        Fortune 500 industrials to national campaigns — with the metrics to show for it.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-2">
+        {clients.map((c) => (
+          <article class="card client-card">
+            <div class="client-head">
+              <h2>{c.name}</h2>
+              <span class="client-period">{c.period}</span>
+            </div>
+            <p class="client-role">{c.role}</p>
+            <p class="client-summary">{c.summary}</p>
+            <ul class="outcomes">
+              {c.outcomes.map((o) => <li>{o}</li>)}
+            </ul>
+            <div class="client-stack">
+              {c.stack.map((s) => <span class="chip">{s}</span>)}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta">
+    <div class="container cta-inner">
+      <p class="mono-label">next engagement</p>
+      <h2>Your system, production-grade.</h2>
+      <a href="/contact" class="btn btn-primary">Start a conversation <span class="arrow">→</span></a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .client-card { gap: 10px; }
+  .client-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .client-head h2 { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.01em; }
+  .client-period {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+  }
+  .client-role { color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; }
+  .client-summary { color: var(--muted); font-size: 0.9rem; }
+  .outcomes {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+  }
+  .outcomes li {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    padding-left: 20px;
+    position: relative;
+  }
+  .outcomes li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-size: 0.8rem;
+  }
+  .client-stack {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: auto;
+    padding-top: 8px;
+  }
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 5px;
+  }
+  .cta { text-align: center; }
+  .cta-inner { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .cta h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); letter-spacing: -0.02em; }
+</style>
