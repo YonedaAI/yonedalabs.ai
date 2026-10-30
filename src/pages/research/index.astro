@@ -29,6 +29,30 @@ const byField = fields.map((f) => ({ field: f, items: collections.filter((c) => 
     </div>
   </section>
 
+  <section class="section flagship">
+    <div class="container">
+      <a class="flagship-card" href="https://cmrps.vercel.app" target="_blank" rel="noopener">
+        <div class="flagship-body">
+          <p class="mono-label">flagship program · new</p>
+          <h2>CMRPS — The Classification of Mathematical Representations of Physical Systems</h2>
+          <p>
+            Twelve volumes and a structural synthesis asking whether mathematical physics admits
+            a structural classification, analogous to the Classification of Finite Simple Groups.
+            Kernel-checked in Lean 4 — 280 machine-checked claims, zero unproven dependencies —
+            with an executable Haskell taxonomy and the Periodic Table of Mathematical Physics.
+          </p>
+          <div class="flagship-facts">
+            <span>13 papers</span>
+            <span>272 pages</span>
+            <span>Lean 4 · no sorry, no new axioms</span>
+            <span>Per-volume editorial review</span>
+          </div>
+        </div>
+        <span class="flagship-cta">Read the series <span class="arrow">→</span></span>
+      </a>
+    </div>
+  </section>
+
   {byField.map(({ field, items }) => (
     <section class="section">
       <div class="container">
@@ -80,6 +104,53 @@ const byField = fields.map((f) => ({ field: f, items: collections.filter((c) => 
 </Base>
 
 <style>
+  .flagship { border-top: none; padding-top: 20px; }
+  .flagship-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 36px;
+    transition: border-color 0.18s ease, transform 0.18s ease;
+  }
+  .flagship-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .flagship-body { max-width: 640px; }
+  .flagship-body h2 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+    line-height: 1.22;
+    margin: 12px 0 12px;
+  }
+  .flagship-body > p { color: var(--text-secondary); font-size: 0.96rem; }
+  .flagship-facts {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+  .flagship-facts span {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+  .flagship-cta {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .flagship-cta .arrow { transition: transform 0.18s ease; }
+  .flagship-card:hover .flagship-cta .arrow { transform: translateX(3px); }
+  @media (max-width: 760px) {
+    .flagship-card { flex-direction: column; align-items: flex-start; padding: 26px; }
+  }
   .field-count {
     font-family: var(--font-mono);
     font-size: 0.8rem;

@@ -15,6 +15,20 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'cmrps',
+    name: 'CMRPS',
+    tagline: 'A structural classification of mathematical physics — 12 volumes, Lean-checked',
+    description:
+      'The Classification of Mathematical Representations of Physical Systems: a twelve-volume series plus synthesis asking whether physics admits a structural classification analogous to the Classification of Finite Simple Groups. Kernel-checked in Lean 4 with 280 machine-checked claims, an executable Haskell taxonomy, and a Periodic Table of Mathematical Physics.',
+    status: 'live',
+    statusLabel: 'Live · 13 papers',
+    category: 'Research Systems',
+    stack: ['Lean 4', 'Haskell', 'LaTeX'],
+    url: 'https://cmrps.vercel.app',
+    featured: true,
+    metric: '280 machine-checked claims',
+  },
+  {
     id: 'catdb',
     name: 'CatDB',
     tagline: 'A governed semantic data layer for AI agents',
