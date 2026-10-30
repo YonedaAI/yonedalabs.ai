@@ -42,7 +42,7 @@ const links = [
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: rgba(8, 8, 14, 0.85);
+    background: var(--nav-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
@@ -59,9 +59,10 @@ const links = [
     display: flex;
     align-items: center;
     gap: 9px;
-    font-weight: 700;
-    font-size: 1.05rem;
-    letter-spacing: -0.02em;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.18rem;
+    letter-spacing: -0.01em;
   }
   .nav-logo em { font-style: normal; color: var(--accent); }
   .nav-links {
@@ -85,8 +86,7 @@ const links = [
     height: 2px;
     background: var(--text);
     border-radius: 2px;
-  }
-  @media (max-width: 760px) {
+  }  @media (max-width: 760px) {
     .nav-toggle { display: flex; }
     .nav-links {
       display: none;
